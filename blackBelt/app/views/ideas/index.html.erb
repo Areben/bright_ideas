@@ -1,0 +1,70 @@
+<h1>
+        Hi <%= current_user.name %>!
+</h1>
+
+<form action="/bright/create" method="post">
+    <input type="hidden" name="authenticity_token"
+        value="<%= form_authenticity_token %>">
+
+    <input type="text" name="idea[idea]"
+        placeholder="Post something witty">
+
+    <input type="submit" value="Post Idea!">
+</form>
+
+<div class="smallBox">
+    <% @ideas.each do |idea| %>
+            <p>
+                <span style="font-weight: bold;">
+                    <a href="/users/<%= idea.user_id %>">
+                        <%= idea.user.alias %>
+                    </a>
+                    Says:
+                </span>
+            </p>
+
+            <p>
+                <%= idea.idea %>
+            </p>
+
+            <p>
+                <span style="font-weight: bold;">
+                    Likes:
+                </span>
+
+                <% total = 0 %>
+                <% idea.likes.each do |i| %>
+                    <% total += 1 %>
+                <% end %>
+                
+                <a href="/bright_ideas/<%= idea.id %>">
+                    <%= total %> People liked this Idea
+                </a>
+            </p>
+
+            <form action="/bright/like/<%= idea.id %>" method="post">
+                <input type="hidden" name="authenticity_token"
+                    value="<%= form_authenticity_token %>">
+
+                <input type="submit" value="Like">
+            </form>
+
+            <% if current_user.id == idea.user_id %>
+                <form action="/bright/destroy/<%= idea.id %>" method="post">
+                    <input type="hidden" name="authenticity_token"
+                    value="<%= form_authenticity_token %>">
+
+                    <input type="hidden" name="_method"
+                    value="delete">
+
+                    <input type="submit" value="Destroy Idea">
+                </form>
+            <% end %>
+
+            <hr>
+
+    <% end %>
+
+
+
+</div>

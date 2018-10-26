@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BlackBelt</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+    <div class="bigBox">
+        <% if flash[:errors] %>
+            <% flash[:errors].each do |e| %>
+                <%= e %>
+            <% end %>
+        <% end %>
+
+        <% if current_user %>
+            <form action="/sessions/destroy" method="post">
+                <input type="hidden" name="authenticity_token"
+                    value="<%= form_authenticity_token %>">
+                <input type="hidden" name="_method" value="delete">
+                <input type="submit" value="Log Out">
+            </form>
+        <% end %>
+
+        <p class= "notice"><%= notice %></p>
+
+        <%= yield %>
+
+        <% if current_user %>
+            <form action="/bright_ideas" method="get">
+                <input type="submit" value="Bright Ideas">
+            </form>
+
+            <form action="/users/<%= current_user.id %>" method="get">
+                <input type="submit" value="User Profile">
+            </form>
+        <% end %>
+
+    </div>
+
+</body>
+</html>

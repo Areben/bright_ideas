@@ -1,0 +1,53 @@
+<h1>Idea Information</h1>
+
+<p>
+    <span style="font-weight: bold;">
+        <a href="/users/<%= @idea.user_id %>">
+            <%= @idea.user.alias %>
+        </a>
+        Says:
+    </span>
+</p>
+
+<p>
+    <%= @idea.idea %>
+</p>
+
+<br>
+<br>
+
+<p>
+    <span style="font-weight: bold;">
+        People who like this idea:
+    </span>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <td>Alias</td>
+            <td>Name</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @idea.users.each do |user| %>
+            <tr>
+                <td>
+                    <a href="/users/<%= user.id %>">
+                        <%= user.alias %>
+                    </a>
+                </td>
+                <td><%= user.name %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+
+
+
+<br>
+<br>
+<br>
+<br>
